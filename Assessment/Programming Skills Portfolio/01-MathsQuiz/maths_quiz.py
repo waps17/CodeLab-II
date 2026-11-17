@@ -43,13 +43,47 @@ def decideOperation():
 
 #starts a new 10 question quiz based on the difficulty level selected by the player
 def start_quiz(level):
-    print("Level chosen:", level)
+    global difficulty, score, question_count #this uses the variables from the top of the file isntead of making new ones in this function
+    difficulty = level                       #this remembers the level that was chosen
+    score = 0                                #this resets the score for a new quiz
+    question_count = 1                       #we start on question 1
+    new_problem()                            #this displays the first question
 
 #menu widgets as lambda allows each button pass its own level number to start_quiz)
 Label(menu_frame, text="Difficulty Level", font=("Calibri", 16, "bold")).pack(pady=20)
 Button(menu_frame, text="1. Easy", width=20, command=lambda: start_quiz(1)).pack(pady=8)
 Button(menu_frame, text="2. Medium", width=20, command=lambda: start_quiz(2)).pack(pady=8)
 Button(menu_frame, text="3. Hard", width=20, command=lambda: start_quiz(3)).pack(pady=8)
+
+#displays the question and answer entry box for the quiz
+def displayProblem(number1, operator, number2):
+    #str turns a number into text, because + cant join text and a number
+    problem_label.config(text=str(number1) + " " + operator + " " + str(number2) + " =")
+    answer_entry.delete(0, END) #clears the entry box
+    answer_entry.focus()        #puts the cursor in the entry box
+    quiz_frame.tkraise()        #brings the screen quiz to the front
+
+#this creates a new problem for the player to answer and displays it
+def new_problem():
+    global attempt, correct_answer
+    attempt = 1                     #every new problem starts with the first attempt
+    number1 = randomInt(difficulty) #first random number
+    number2 = randomInt(difficulty) #second random number
+    operator = decideOperation()    # '+' or '-'
+
+    if operator == '+':
+        correct_answer = number1 + number2
+    else:
+        correct_answer = number1 - number2 #this allows for negative like 5 - 20
+
+    displayProblem(number1, operator, number2)
+
+#quiz screen widgets
+problem_label = Label(quiz_frame, font=("Calibri", 26, "bold")) #this is the label that will display the question
+problem_label.pack(pady=40)
+
+answer_entry = Entry(quiz_frame, font=("Calibri", 18), width=10, justify="center") #the player types here
+answer_entry.pack()
 
 displayMenu()   #this brings the menu ot the front
 root.mainloop() #this keeps the window open
