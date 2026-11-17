@@ -37,4 +37,8 @@ def randomInt(level):
     else:
         return random.randint(1000, 9999) #hard level four digit numbers
 
+#this function randomly chooses an operation for the question
+def decideOperation():
+    return random.choice(['+', '-'])
+
 root.mainloop()
