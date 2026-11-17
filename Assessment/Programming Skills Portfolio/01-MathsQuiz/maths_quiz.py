@@ -41,4 +41,15 @@ def randomInt(level):
 def decideOperation():
     return random.choice(['+', '-'])
 
-root.mainloop()
+#starts a new 10 question quiz based on the difficulty level selected by the player
+def start_quiz(level):
+    print("Level chosen:", level)
+
+#menu widgets as lambda allows each button pass its own level number to start_quiz)
+Label(menu_frame, text="Difficulty Level", font=("Calibri", 16, "bold")).pack(pady=20)
+Button(menu_frame, text="1. Easy", width=20, command=lambda: start_quiz(1)).pack(pady=8)
+Button(menu_frame, text="2. Medium", width=20, command=lambda: start_quiz(2)).pack(pady=8)
+Button(menu_frame, text="3. Hard", width=20, command=lambda: start_quiz(3)).pack(pady=8)
+
+displayMenu()   #this brings the menu ot the front
+root.mainloop() #this keeps the window open
