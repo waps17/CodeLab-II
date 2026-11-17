@@ -24,4 +24,17 @@ quiz_frame.place(x=0, y=0, width=400, height=400)
 result_frame = Frame(root)
 result_frame.place(x=0, y=0, width=400, height=400)
 
+#this function displays the difficulty menu
+def displayMenu():
+    menu_frame.tkraise() #thsi brings the frame in front of the other two
+
+#returns a random integer based on the difficulty level
+def randomInt(level):
+    if level == 1:
+        return random.randint(1, 9)       #easy level single digit numbers
+    elif level == 2:
+        return random.randint(10, 99)     #medium level two digit numbers
+    else:
+        return random.randint(1000, 9999) #hard level four digit numbers
+
 root.mainloop()
