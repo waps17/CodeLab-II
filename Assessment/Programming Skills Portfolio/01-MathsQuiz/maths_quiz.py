@@ -85,5 +85,81 @@ problem_label.pack(pady=40)
 answer_entry = Entry(quiz_frame, font=("Calibri", 18), width=10, justify="center") #the player types here
 answer_entry.pack()
 
+#this checks the answer, shows a message, returns true of false
+def isCorrect(user_answer, right_answer, tries):
+    if user_answer == right_answer:
+        if tries == 1:
+            messagebox.showinfo("correct", "correct! +10 points")
+        else:
+            messagebox.showinfo("correct", "correct! +5 points")
+        return True #tells the program that the answer was correct
+    else:
+        if tries == 1:
+            messagebox.showinfo("wrong", "wrong! try one more time")
+        else:
+            messagebox.showinfo("wrong", "wrong again. on to the next question")
+        return False #tells the program that the answer was wrong
+
+#moves on to the next question, or to the results after question 10
+def next_question():
+    global question_count
+    question_count = question_count + 1
+    if question_count > 10:
+        displayResults(score) #the quiz is over
+    else:
+        new_problem()
+
+#this runs when the submit button is clicked
+def check_answer():
+    global score, attempt
+    user_answer = int(answer_entry.get()) #get() reads the typed text while int() turns it into a whole number
+
+    if isCorrect(user_answer, correct_answer, attempt): #true means the answer is correct
+        if attempt == 1:
+            score = score + 10 #first attempt gives 10 pts
+        else:
+            score = score + 5 #while second number gives only 5 pts
+        next_question()
+    else:
+        if attempt == 1:
+            attempt = 2 #one more chance at the same problem
+            answer_entry.delete(0, END)
+        else:
+            next_question() #if the tow answers are wrong we move on
+
+#the submit button goes here because it needs to check_answer to exist above it
+Button(quiz_frame, text="submit", width=15, command=check_answer).pack(pady=20)
+
+#shows the final score out of 100 and the players rank
+def displayResults(final_score):
+    if final_score > 90:
+        rank = "A+"
+    elif final_score >= 80:
+        rank = "A"
+    elif final_score >= 70:
+        rank = "B"
+    elif final_score >= 60:
+        rank = "C"
+    elif final_score >= 50:
+        rank = "D"
+    else:
+        rank = "F"
+
+    final_score_label.config(text="your score: " + str(final_score) + " / 100") #the config changes a widgets text
+    rank_label.config(text="your rank: " + rank)
+    result_frame.tkraise() #brings the results screen to the front
+
+#results screen widgets
+Label(result_frame, text="quiz finished!!!", font=("Calibri", 20, "bold")).pack(pady=20)
+
+final_score_label = Label(result_frame, font=("Calibri", 16))
+final_score_label.pack(pady=5)
+
+rank_label = Label(result_frame, font=("Calibri", 16))
+rank_label.pack(pady=5)
+
+Label(result_frame, text="would you like to play again?", font=("Calibri", 12)).pack(pady=15)
+Button(result_frame, text="play again", width=15, command=displayMenu).pack(pady=5)
+
 displayMenu()   #this brings the menu ot the front
 root.mainloop() #this keeps the window open
