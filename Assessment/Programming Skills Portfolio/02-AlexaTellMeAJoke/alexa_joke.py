@@ -1,4 +1,16 @@
 from tkinter import *
+import os
+
+#this finds the folder this py file is in since randomJokes.txt cannot be found without it
+folder = os.path.dirname(os.path.abspath(__file__))
+file_path = os.path.join(folder, "randomJokes.txt")
+
+jokes = []
+with open(file_path, "r") as file:
+    for line in file:
+        line= line.strip()
+        if line != "":
+            jokes.append(line)
 
 root = Tk() #main window
 root.title("Alexa Gives Jokes") #text in the title bar
