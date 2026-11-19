@@ -1,4 +1,27 @@
 from tkinter import *
+import os
+
+#this finds the folder this py file is in so the txt file is always found and show no errors
+folder = os.path.dirname(os.path.abspath(__file__))
+file_path = os.path.join(folder, "studentMarks.txt")
+
+#this stores each student in a list as it reads the txt file
+students = []
+with open(file_path, "r") as file:
+    file.readline() #this skips the first line which is the number of students
+    for line in file:
+        line = line.strip()
+        if line != "":
+            parts = line.split(",") #this cuts the line at every comma into a list
+            student = {
+                "code": parts[0],
+                "name": parts[1],
+                "cw1": int(parts[2]),
+                "cw2": int(parts[3]),
+                "cw3": int(parts[4]),
+                "exam": int(parts[5])
+            }
+            students.append(student)
 
 root = Tk() #makes the main window and stores it inside root 
 root.title("Student Manager") #name in the title bar
