@@ -6,6 +6,7 @@ import random
 folder = os.path.dirname(os.path.abspath(__file__))
 file_path = os.path.join(folder, "randomJokes.txt")
 
+#this reads the text file and stores each jokes in a list
 jokes = []
 with open(file_path, "r") as file:
     for line in file:
@@ -17,7 +18,7 @@ root = Tk() #main window
 root.title("Alexa Gives Jokes") #text in the title bar
 root.geometry("500x400") #size of the window
 
-punchline = "" #this remebers the punchline of hte current joke
+punchline = "" #this remembers the punchline of hte current joke
 
 #picks a random joke then it splits it and shows the setup
 def tell_joke():
@@ -45,7 +46,7 @@ setup_label.pack(pady=5)
 punchline_label = Label(root, text="")
 punchline_label.pack(pady=5)
 
-#button that shows the punchline 
+#button that shows the punchline
 punchline_button = Button(root, text="Show Punchline", command=show_punchline)
 punchline_button.pack(pady=5)
 
