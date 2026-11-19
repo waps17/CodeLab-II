@@ -1,5 +1,6 @@
 from tkinter import *
 import os
+import random
 
 #this finds the folder this py file is in since randomJokes.txt cannot be found without it
 folder = os.path.dirname(os.path.abspath(__file__))
@@ -8,7 +9,7 @@ file_path = os.path.join(folder, "randomJokes.txt")
 jokes = []
 with open(file_path, "r") as file:
     for line in file:
-        line= line.strip()
+        line = line.strip()
         if line != "":
             jokes.append(line)
 
@@ -16,8 +17,20 @@ root = Tk() #main window
 root.title("Alexa Gives Jokes") #text in the title bar
 root.geometry("500x400") #size of the window
 
+punchline = "" #this remebers the punchline of hte current joke
+
+#picks a random joke then it splits it and shows the setup
+def tell_joke():
+    global punchline
+    joke = random.choice(jokes)
+    parts = joke.split("?", 1)
+    setup = parts[0] + "?"
+    punchline = parts[1]
+    setup_label.config(text=setup)
+    punchline_label.config(text="")
+
 #the button that starts the joke
-tell_button = Button(root, text="Alexa tell me a Joke")
+tell_button = Button(root, text="Alexa tell me a Joke", command=tell_joke)
 tell_button.pack(pady=5)
 
 #label that will show the setup of the joke
