@@ -50,7 +50,7 @@ punchline_button = Button(root, text="Show Punchline", command=show_punchline)
 punchline_button.pack(pady=5)
 
 #this button gives another random joke
-next_button = Button(root, text="Next Joke")
+next_button = Button(root, text="Next Joke", command=tell_joke)
 next_button.pack(pady=5)
 
 #this button closes the application
