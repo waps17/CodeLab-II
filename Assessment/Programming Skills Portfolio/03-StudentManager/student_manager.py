@@ -23,6 +23,31 @@ with open(file_path, "r") as file:
             }
             students.append(student)
 
+#this works out the total coursework mark
+def getCoursework(student):
+    return student["cw1"] + student["cw2"] + student["cw3"]
+
+#this works out the total mark of coursework plus exam which is out of 160
+def getTotal(student):
+    return getCoursework(student) + student["exam"]
+
+#this works out overall percentage based on 160 marks
+def getPercentage(student):
+    return getTotal(student) / 160 * 100
+
+#while this works out the grade from the percetnage
+def getGrade(percentage):
+    if percentage >= 70:
+        return "A"
+    elif percentage >= 60:
+        return "B"
+    elif percentage >= 50:
+        return "C"
+    elif percentage >= 40:
+        return "D"
+    else:
+        return "F"
+
 root = Tk() #makes the main window and stores it inside root 
 root.title("Student Manager") #name in the title bar
 root.geometry("600x500") #window size
