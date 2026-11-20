@@ -53,11 +53,20 @@ def formatStudent(student):
     percentage = getPercentage(student)
     return f"{student['name']} | No. {student['code']} | Coursework: {getCoursework(student)} | Exam: {student['exam']} | {round(percentage, 2)}% | Grade: {getGrade(percentage)}"
 
+def getAverage():
+    total = 0
+    for student in students:
+        total = total + getPercentage(student)
+    return total / len(students)
+
 #this shows every student in the output box
 def viewAll():
     output_text.delete("1.0", END) #this clears the old text
     for student in students: #this goes through every student in the list
         output_text.insert(END, formatStudent(student) + "\n") #adds one line per student
+    output_text.insert(END, "\n")
+    output_text.insert(END, f"Number of students in the class: {len(students)}\n")
+    output_text.insert(END, f"Average percentage: {round(getAverage(), 2)}%\n")
 
 root = Tk() #makes the main window and stores it inside root 
 root.title("Student Manager") #name in the title bar
