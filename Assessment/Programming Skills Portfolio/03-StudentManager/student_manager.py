@@ -53,6 +53,7 @@ def formatStudent(student):
     percentage = getPercentage(student)
     return f"{student['name']} | No. {student['code']} | Coursework: {getCoursework(student)} | Exam: {student['exam']} | {round(percentage, 2)}% | Grade: {getGrade(percentage)}"
 
+#this gives the average percentage of all the students
 def getAverage():
     total = 0
     for student in students:
@@ -64,9 +65,26 @@ def viewAll():
     output_text.delete("1.0", END) #this clears the old text
     for student in students: #this goes through every student in the list
         output_text.insert(END, formatStudent(student) + "\n") #adds one line per student
-    output_text.insert(END, "\n")
+    output_text.insert(END, "\n") #this adds a blank line before the summary
     output_text.insert(END, f"Number of students in the class: {len(students)}\n")
     output_text.insert(END, f"Average percentage: {round(getAverage(), 2)}%\n")
+
+#this looks for a student with the given student number and gives back that student
+def findStudent(number):
+    for student in students:
+        if student["code"] == number:
+            return student
+    return None
+
+#this shows the record of the student whose number was typed in the entry box
+def viewOne():
+    output_text.delete("1.0", END) #this clears the old text
+    number = number_entry.get().strip() #this reads whats typed
+    student = findStudent(number) #this looks for that specidic student
+    if student == None: #this if nobody has that number
+        output_text.insert(END, "No student found with that student number.\n")
+    else:
+        output_text.insert(END, formatStudent(student) + "\n")
 
 root = Tk() #makes the main window and stores it inside root 
 root.title("Student Manager") #name in the title bar
@@ -76,7 +94,7 @@ root.geometry("700x500") #window size
 view_all_button = Button(root, text="1. view all student records", width=35, command=viewAll)
 view_all_button.pack(pady=5) #pack() puts the button in the window while pady adds space above and below
 
-view_one_button = Button(root, text="2. view individual student record", width=35)
+view_one_button = Button(root, text="2. view individual student record", width=35, command=viewOne)
 view_one_button.pack(pady=5)
 
 highest_button = Button(root, text="3. show student with highest total score", width=35)
@@ -84,6 +102,12 @@ highest_button.pack(pady=5)
 
 lowest_button = Button(root, text="4. show student with lowest total score", width=35)
 lowest_button.pack(pady=5)
+
+number_label = Label(root, text="Type a student number, then click button 2:")
+number_label.pack()
+
+number_entry = Entry(root, width=20)
+number_entry.pack(pady=5)
 
 output_text = Text(root, width=78, height=15)
 output_text.pack(pady=10)
