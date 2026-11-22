@@ -86,6 +86,32 @@ def viewOne():
     else:
         output_text.insert(END, formatStudent(student) + "\n")
 
+#this finds the student with the highest total marks
+def findHighest():
+    highest = students[0] #this starts by assuming the first studen is the highest
+    for student in students:
+        if getTotal(student) > getTotal(highest): #this finds someone with a higher total
+            highest = student
+    return highest
+
+#this finds the student with the lowest total mark
+def findLowest():
+    lowest = students[0] #this starts assuming the first student is the lowest 
+    for student in students:
+        if getTotal(student) < getTotal(lowest): #this finds someone with a lower total
+            lowest = student
+    return lowest
+
+#this shows the student with the highest total mark
+def viewHighest():
+    output_text.delete("1.0", END) #this clears the old text from the ouput box
+    output_text.insert(END, formatStudent(findHighest()) + "\n") #this finds the highest student turns them into one line of text and adds it to box
+
+#this shows the student with the lowest total mark
+def viewLowest():
+    output_text.delete("1.0", END) #this clears the old text from the ouput box
+    output_text.insert(END, formatStudent(findLowest()) + "\n") #this finds the lowest student, turns them into one line of text and adds it to box
+
 root = Tk() #makes the main window and stores it inside root 
 root.title("Student Manager") #name in the title bar
 root.geometry("700x500") #window size
@@ -97,10 +123,10 @@ view_all_button.pack(pady=5) #pack() puts the button in the window while pady ad
 view_one_button = Button(root, text="2. view individual student record", width=35, command=viewOne)
 view_one_button.pack(pady=5)
 
-highest_button = Button(root, text="3. show student with highest total score", width=35)
+highest_button = Button(root, text="3. show student with highest total score", width=35, command=viewHighest)
 highest_button.pack(pady=5)
 
-lowest_button = Button(root, text="4. show student with lowest total score", width=35)
+lowest_button = Button(root, text="4. show student with lowest total score", width=35, command=viewLowest)
 lowest_button.pack(pady=5)
 
 number_label = Label(root, text="Type a student number, then click button 2:")
