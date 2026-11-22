@@ -132,8 +132,8 @@ lowest_button.pack(pady=5)
 number_label = Label(root, text="Type a student number, then click button 2:")
 number_label.pack()
 
-number_entry = Entry(root, width=20)
-number_entry.pack(pady=5)
+number_entry = Entry(root, width=20) #this is the box where the user types the student number
+number_entry.pack(pady=5) #pack() puts it in the window and pady adds a little space above and below
 
 output_text = Text(root, width=78, height=15)
 output_text.pack(pady=10)
